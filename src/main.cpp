@@ -1,6 +1,6 @@
 #include "slam.h"
 
-int main(){
+int main() {
     slam();
     // return 0;
 }

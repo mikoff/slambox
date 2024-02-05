@@ -1,0 +1,14 @@
+# Use the Google style in this project.
+BasedOnStyle: Google
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+QualifierAlignment: Right
+
+SeparateDefinitionBlocks: Always
+
+IndentWidth: 4
+TabWidth: 4
+
+CommentPragmas: '(@copydoc|@copybrief|@see|@overload|@snippet)'

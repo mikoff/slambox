@@ -1,11 +1,12 @@
-#include <iostream>
 #include "slam.h"
 
-int slam(){
-    #ifdef NDEBUG
+#include <iostream>
+
+int slam() {
+#ifdef NDEBUG
     std::cout << "slambox/1.0: Hello World Release!\n";
-    #else
+#else
     std::cout << "slambox/1.0: Hello World Debug!\n";
-    #endif
+#endif
     return 0;
 }
