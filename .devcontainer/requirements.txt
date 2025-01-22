@@ -1,0 +1,15 @@
+folium
+ipympl
+ipywidgets
+jupyterlab
+matplotlib
+numpy
+osmnx
+pandas
+plotly
+pyceres
+pycolmap
+pyproj
+scikit-learn
+scikit-learn-extra
+scipy

@@ -10,12 +10,13 @@ class SlamBoxRecipe(ConanFile):
     default_options = {"shared": False, "fPIC": True}
 
     def requirements(self):
-        self.requires("boost/1.82.0")
+        self.requires("boost/1.84.0")
+        self.requires("ceres-solver/2.2.0")
         self.requires("eigen/3.4.0")
-        self.requires("gtsam/4.2.0a9")
-        self.requires("libpng/1.6.40", override=True)
-        self.requires("opencv/4.8.1")
-        self.requires("pulseaudio/14.2")
+        self.requires("gtsam/4.2")
+        # self.requires("libpng/1.6.40", override=True)
+        self.requires("opencv/4.10.0")
+        # self.requires("pulseaudio/14.2")
         self.test_requires("gtest/1.11.0")
 
     def build_requirements(self):

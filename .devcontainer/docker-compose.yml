@@ -1,0 +1,13 @@
+version: '3'
+services:
+  ceres-dev:
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/workspace:cached
+    environment:
+      - SDL_VIDEODRIVER=x11
+      - DISPLAY=${DISPLAY}
+      - TERM=xterm-256color
+      - force_color_prompt=1
+    tty: true
