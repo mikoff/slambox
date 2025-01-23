@@ -1,23 +1,10 @@
 {
-    "dockerComposeFile": "../docker-compose.yml",
-    "service": "slambox-dev",
+    "name": "slambox container",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "../Dockerfile",
+        "context": ".."
     },
-    "remoteUser": "vscode",
-    "forwardPorts": [
-        8888
-    ],
-    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
-    "workspaceFolder": "/workspace",
-    "shutdownAction": "stopCompose",
-    "remoteEnv": {
-        "DISPLAY": ":0"
-    },
-    "mounts": [
-        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
-        "source=/mnt/wslg,target=/mnt/wslg,type=bind,consistency=cached"
-    ],
+    "remoteUser": "dev",
     "customizations": {
         "vscode": {
             "settings": {

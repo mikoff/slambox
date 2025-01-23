@@ -1,8 +1,11 @@
 version: '3'
 services:
-  ceres-dev:
-    ports:
-      - "8888:8888"
+  slambox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user:
+      vscode
     volumes:
       - .:/workspace:cached
     environment:
@@ -10,4 +13,6 @@ services:
       - DISPLAY=${DISPLAY}
       - TERM=xterm-256color
       - force_color_prompt=1
+    ports:
+      - "8888:8888"
     tty: true
