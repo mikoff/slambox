@@ -6,8 +6,6 @@ from conan.tools.cmake import cmake_layout, CMake, CMakeDeps, CMakeToolchain
 
 class SlamBoxRecipe(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
 
     def requirements(self):
         self.requires("boost/1.84.0")
@@ -15,7 +13,7 @@ class SlamBoxRecipe(ConanFile):
         self.requires("eigen/3.4.0")
         self.requires("gtsam/4.2")
         self.requires("opencv/4.10.0")
-        self.test_requires("gtest/1.11.0")
+        self.test_requires("gtest/1.15.0")
 
     def build_requirements(self):
         self.tool_requires("cmake/3.28.1")

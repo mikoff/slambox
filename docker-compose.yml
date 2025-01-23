@@ -1,11 +1,11 @@
 version: '3'
 services:
-  slambox:
+  development:
     build:
       context: .
       dockerfile: Dockerfile
     user:
-      vscode
+      developer
     volumes:
       - .:/workspace:cached
     environment:

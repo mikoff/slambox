@@ -2,6 +2,7 @@
 
 Build & run everything
 ```
+conan profile detect
 conan build . --build=missing
 ```
 

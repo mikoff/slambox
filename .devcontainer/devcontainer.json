@@ -1,14 +1,13 @@
 {
-    "name": "slambox container",
-    "build": {
-        "dockerfile": "../Dockerfile",
-        "context": ".."
-    },
-    "remoteUser": "dev",
+    "name": "development container",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "development",
+    "workspaceFolder": "/workspace",
+    "remoteUser": "developer",
     "customizations": {
         "vscode": {
             "settings": {
-                "python.defaultInterpreterPath": "/home/vscode/venv/slambox/bin/python"
+                "python.defaultInterpreterPath": "/home/developer/venv/development/bin/python"
             },
             "extensions": [
                 "ms-toolsai.jupyter",

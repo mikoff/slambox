@@ -9,6 +9,7 @@ find_package(Boost REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(GTSAM REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(TBB REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${Eigen_INCLUDE_DIRS})
@@ -20,6 +21,7 @@ target_link_libraries(${PROJECT_NAME}
     ${Eigen_LIBRARIES}
     ${GTSAM_LIBRARIES}
     ${OpenCV_LIBS}
+    TBB::tbb
     )
 
 if (NOT BUILD_TESTING STREQUAL OFF)
