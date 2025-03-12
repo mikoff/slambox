@@ -31,8 +31,6 @@ RUN . $PYTHON_VENV/bin/activate && \
     ls -la /home/developer/ && \
     cd /home/developer/symforce && pip install -e .
 
-RUN ls -la /home/developer/
-
 # Stage 2: Final runtime image
 FROM ubuntu:22.04
 
@@ -50,8 +48,6 @@ WORKDIR /home/developer
 # Copy the virtualenv and the symforce source (preserving the path)
 COPY --chown=developer:developer --from=builder /home/developer/venv/development /home/developer/venv/development
 COPY --chown=developer:developer --from=builder /home/developer/symforce /home/developer/symforce
-
-RUN ls -la /home/developer/
 
 # Update PATH to use the virtualenv
 ENV PATH="/home/developer/venv/development/bin:$PATH"
