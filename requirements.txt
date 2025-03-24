@@ -3,6 +3,7 @@ folium
 ipympl
 ipywidgets
 jupyterlab
+lanelet2
 matplotlib
 numpy
 osmnx
