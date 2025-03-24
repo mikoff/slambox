@@ -57,3 +57,4 @@ COPY --chown=developer:developer --from=builder /home/developer/venv/development
  
 # Update PATH to use the virtualenv
 ENV PATH="/home/developer/venv/development/bin:$PATH"
+ENV LD_LIBRARY_PATH="/home/developer/venv/development/lib:$LD_LIBRARY_PATH"

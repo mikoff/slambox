@@ -1,9 +1,20 @@
 {
+    "notebook.formatOnSave.enabled": true,
+    "notebook.codeActionsOnSave": {
+        "notebook.source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+
     "[python]": {
-        "diffEditor.ignoreTrimWhitespace": false,
-        "editor.defaultColorDecorators": false,
         "editor.formatOnType": true,
         "editor.wordBasedSuggestions": "off",
-        "editor.defaultFormatter": "charliermarsh.ruff"
-    }
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff",
+    },
+
+    "ruff.lineLength": 88,
+    "ruff.lint.select": ["C", "E", "F", "W"]
 }
