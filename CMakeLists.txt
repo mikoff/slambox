@@ -1,42 +1,50 @@
 cmake_minimum_required(VERSION 3.15)
-project(slambox C CXX)
+project(slambox LANGUAGES C CXX)
 
+# Create the library target from src/slam.cpp
 add_library(${PROJECT_NAME} src/slam.cpp)
-target_include_directories(${PROJECT_NAME} PUBLIC include)
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "include/slam.h")
+target_include_directories(${PROJECT_NAME} 
+    PUBLIC 
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    PUBLIC_HEADER "include/slam.h"
+)
 
+# Use Conan-generated config files via find_package() without manually setting CMAKE_MODULE_PATH.
 find_package(Boost REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(GTSAM REQUIRED)
+find_package(GTSAM CONFIG REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(TBB REQUIRED)
+find_package(symforce REQUIRED CONFIG)
 
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${Eigen_INCLUDE_DIRS})
-include_directories(${GTSAM_INCLUDE_DIR})
-include_directories(${OpenCV_INCLUDE_DIRS})
-
+# Link libraries using imported targets where available
 target_link_libraries(${PROJECT_NAME}
-    ${Boost_LIBRARIES}
-    ${Eigen_LIBRARIES}
-    ${GTSAM_LIBRARIES}
-    ${OpenCV_LIBS}
-    TBB::tbb
-    )
+    PRIVATE
+        Boost::boost
+        Eigen3::Eigen
+        ${GTSAM_LIBRARIES}
+        ${OpenCV_LIBS}
+        TBB::tbb
+        symforce::symforce
+)
 
-if (NOT BUILD_TESTING STREQUAL OFF)
+# If tests are enabled, add the tests subdirectory
+if(NOT BUILD_TESTING STREQUAL OFF)
     add_subdirectory(tests)
 endif()
 
+# Add compiler-specific flags using target_compile_options
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(GCC_COMPILE_OPTIONS "-Wall;-Wextra;-Werror;-pedantic")
-    set(GCC_COMPILE_DEBUG_OPTIONS "${GCC_COMPILE_OPTIONS};-ggdb;-O0")
-    set(GCC_COMPILE_RELEASE_OPTIONS "${GCC_COMPILE_OPTIONS};-O3")
-    target_compile_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Debug>:${GCC_COMPILE_DEBUG_OPTIONS}>")
-    target_compile_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Release>:${GCC_COMPILE_RELEASE_OPTIONS}>")
+    target_compile_options(${PROJECT_NAME} PUBLIC 
+        "$<$<CONFIG:Debug>:-Wall;-Wextra;-Werror;-pedantic;-ggdb;-O0>"
+        "$<$<CONFIG:Release>:-Wall;-Wextra;-Werror;-pedantic;-O3>"
+    )
 endif()
 
+# Create the main executable and link it with the library target
 add_executable(main src/main.cpp)
-add_dependencies(main ${PROJECT_NAME})
-target_include_directories(main PUBLIC include)
-target_link_libraries(main ${PROJECT_NAME})
+target_link_libraries(main PRIVATE ${PROJECT_NAME})
+target_include_directories(main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

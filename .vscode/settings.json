@@ -16,5 +16,13 @@
     },
 
     "ruff.lineLength": 88,
-    "ruff.lint.select": ["C", "E", "F", "W"]
+    "ruff.lint.select": [
+        "C",
+        "E",
+        "F",
+        "W"
+    ],
+    "files.associations": {
+        "ostream": "cpp"
+    }
 }

@@ -1,7 +1,7 @@
 import os
 
 from conan import ConanFile
-from conan.tools.cmake import cmake_layout, CMake, CMakeDeps, CMakeToolchain
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
 
 
 class SlamBoxRecipe(ConanFile):
@@ -13,6 +13,7 @@ class SlamBoxRecipe(ConanFile):
         self.requires("eigen/3.4.0")
         self.requires("gtsam/4.2")
         self.requires("opencv/4.10.0")
+        self.requires("symforce/0.1@youruser/testing")
         self.test_requires("gtest/1.15.0")
 
     def build_requirements(self):
@@ -34,3 +35,11 @@ class SlamBoxRecipe(ConanFile):
         if not self.conf.get("tools.build:skip_test", default=False):
             test_folder = os.path.join("tests")
             self.run(os.path.join(test_folder, "dummy_test"))
+
+    def package(self):
+        # (Optional) you may add package() step here if needed.
+        pass
+
+    def package_info(self):
+        # (Optional) if packaging artifacts is desired, configure package_info accordingly.
+        pass
