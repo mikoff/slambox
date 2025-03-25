@@ -56,6 +56,16 @@ class SymforceConan(ConanFile):
         copy(self, pattern="*", src=os.path.join(self.source_folder, "gen", "python", "sym"), dst=os.path.join(self.package_folder, "python", "sym"))
         copy(self, pattern="*", src=os.path.join(self.build_folder, "lcmtypes", "python2.7", "lcmtypes"), dst=os.path.join(self.package_folder, "python", "lcmtypes"))
         copy(self, pattern="*", src=os.path.join(self.build_folder, "pybind"), dst=os.path.join(self.package_folder, "python"))
+        symengine_src = os.path.join(self.build_folder, "symengine_install", "lib", "python3.10", "site-packages", "symengine")
+        if os.path.isdir(symengine_src):
+            copy(self, pattern="*", src=symengine_src, dst=os.path.join(self.package_folder, "python", "symengine"))
+        else:
+            assert False, "symengine python package not found"
+
+        env_file = os.path.join("/home/developer/", "symforce.env")
+        os.makedirs(os.path.dirname(env_file), exist_ok=True)
+        with open(env_file, "w") as f:
+            f.write(os.path.join(self.package_folder, "python"))
 
     def package_info(self):
         self.cpp_info.libs = ["symforce_cholesky", "symforce_gen", "symforce_opt", "symforce_slam"]

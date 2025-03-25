@@ -37,11 +37,6 @@ RUN python3 -m venv $PYTHON_VENV && \
 COPY --chown=developer:developer requirements.txt .
 RUN . $PYTHON_VENV/bin/activate && pip install -r requirements.txt
 
-# Clone symforce into a persistent location and install for python development
-RUN . $PYTHON_VENV/bin/activate && \
-    git clone --depth 1 https://github.com/symforce-org/symforce.git /tmp/symforce && \
-    cd /tmp/symforce && pip install . && \
-    rm -rf /tmp/symforce
 
 # Download & install symforce for c++ development
 COPY --chown=developer:developer conan_recipes/symforce /home/developer/conan_recipes/symforce
@@ -59,7 +54,7 @@ WORKDIR /home/developer
 # Copy the virtual environment and the Conan cache from builder stage
 COPY --chown=developer:developer --from=builder /home/developer/venv/development /home/developer/venv/development
 COPY --chown=developer:developer --from=builder /home/developer/.conan2 /home/developer/.conan2
+COPY --chown=developer:developer --from=builder /home/developer/symforce.env /home/developer/symforce.env
 
 # Update PATH to use the virtualenv
 ENV PATH="/home/developer/venv/development/bin:$PATH"
-ENV LD_LIBRARY_PATH="/home/developer/venv/development/lib:$LD_LIBRARY_PATH"
