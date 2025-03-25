@@ -1,5 +1,5 @@
 # Stage 1: Builder
-FROM ubuntu:22.04 AS common
+FROM ubuntu:22.04 AS base
  
 # Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -19,42 +19,47 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgmp-dev \
     && rm -rf /var/lib/apt/lists/*
  
-# Stage 2: symforce & requirements
-FROM common as builder
- 
-# Create non-root user and set working directory
+# Stage 2: Builder (Build symforce via Conan)
+FROM base AS builder
+
+# Create non-root user
 RUN groupadd -g 1000 developer && \
-    useradd -u 1000 -g 1000 -m -s /bin/bash developer
+    useradd -u 1000 -g developer -m -s /bin/bash developer
 USER developer
 WORKDIR /home/developer
- 
-# Set up virtualenv and upgrade pip
+
+# Set up virtualenv and install/upgade pip and Conan
 ENV PYTHON_VENV=/home/developer/venv/development
 RUN python3 -m venv $PYTHON_VENV && \
     . $PYTHON_VENV/bin/activate && pip install --upgrade pip
- 
+    
 # Install Python requirements
 COPY --chown=developer:developer requirements.txt .
 RUN . $PYTHON_VENV/bin/activate && pip install -r requirements.txt
- 
-# Clone symforce into a persistent location and install it in editable mode
+
+# Clone symforce into a persistent location and install for python development
 RUN . $PYTHON_VENV/bin/activate && \
     git clone --depth 1 https://github.com/symforce-org/symforce.git /tmp/symforce && \
     cd /tmp/symforce && pip install . && \
     rm -rf /tmp/symforce
- 
-# Stage 3: Final runtime image
-FROM common
- 
+
+# Download & install symforce for c++ development
+COPY --chown=developer:developer conan_recipes/symforce /home/developer/conan_recipes/symforce
+RUN . $PYTHON_VENV/bin/activate && \
+    conan profile detect && \
+    conan create /home/developer/conan_recipes/symforce --user=youruser --channel=testing --build=missing
+
+# Stage 3: Final Runtime Image
+FROM base
 # Create non-root user for runtime
 RUN groupadd -g 1000 developer && \
     useradd -u 1000 -g 1000 -m -s /bin/bash developer
 USER developer
 WORKDIR /home/developer
- 
-# Copy the virtualenv and the symforce source (preserving the path)
+# Copy the virtual environment and the Conan cache from builder stage
 COPY --chown=developer:developer --from=builder /home/developer/venv/development /home/developer/venv/development
- 
+COPY --chown=developer:developer --from=builder /home/developer/.conan2 /home/developer/.conan2
+
 # Update PATH to use the virtualenv
 ENV PATH="/home/developer/venv/development/bin:$PATH"
 ENV LD_LIBRARY_PATH="/home/developer/venv/development/lib:$LD_LIBRARY_PATH"
