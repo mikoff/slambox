@@ -1,0 +1,9 @@
+{
+    "configurations": [
+        {
+            "name": "devcontainer",
+            "compileCommands": "${workspaceFolder}/build/Release/compile_commands.json",
+        }
+    ],
+    "version": 4
+}

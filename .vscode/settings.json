@@ -24,5 +24,11 @@
     ],
     "files.associations": {
         "ostream": "cpp"
-    }
+    },
+
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.formatOnType": false,
+        "editor.formatOnSave": true,
+    },
 }
