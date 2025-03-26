@@ -4,7 +4,6 @@
         "notebook.source.fixAll": "explicit",
         "source.organizeImports": "explicit"
     },
-
     "[python]": {
         "editor.formatOnType": true,
         "editor.wordBasedSuggestions": "off",
@@ -12,9 +11,10 @@
             "source.fixAll": "explicit",
             "source.organizeImports": "explicit"
         },
-        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.defaultFormatter": "charliermarsh.ruff"
     },
-
+    "python.analysis.extraPaths": [
+    ],
     "ruff.lineLength": 88,
     "ruff.lint.select": [
         "C",

@@ -1,6 +1,7 @@
 {
     "name": "development container",
     "dockerComposeFile": "../docker-compose.yml",
+    "postCreateCommand": "./.vscode/update-python-extra-paths.sh",
     "service": "development",
     "workspaceFolder": "/workspace",
     "remoteUser": "developer",
