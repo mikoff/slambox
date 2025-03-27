@@ -1,20 +1,20 @@
 # Repo for experiments on CV and SLAM
 
 ## Python
-To activate conan-build packages, like `symforce`, call:
+To activate Conan-built packages like `symforce`, run:
 ```bash
 source /workspace/build/generators/conanrun.sh
 ```
-If you want to use jupyter just open a notebook and pick Jupyter kernel, associated with `symforce`.
+To use Jupyter, open a notebook and select the kernel associated with `symforce` using drop-down VSCode menu.
 
 
 ## C++ build
-Build & run everything
+To build and run everything:
 ```bash
 conan build . --build=missing
 ```
 
-If you want to set some settings, change configuration set the appropriate settings, e.g.:
+To set specific configurations, adjust the settings as needed. For example:
 ```bash
 conan build . --build=missing -s build_type=Release -s "slambox/*:build_type=Release" -c tools.build:skip_test=False
 ```
