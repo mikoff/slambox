@@ -1,7 +1,8 @@
 import os
 
 from conan import ConanFile
-from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.env import VirtualRunEnv
 
 
 class SlamBoxRecipe(ConanFile):
@@ -20,14 +21,19 @@ class SlamBoxRecipe(ConanFile):
         self.tool_requires("cmake/3.28.1")
 
     def layout(self):
-        cmake_layout(self)
+        self.folders.build = "build"
+        self.folders.generators = os.path.join(self.folders.build, "generators")
 
     def generate(self):
         tc = CMakeToolchain(self)
         tc.cache_variables["CMAKE_EXPORT_COMPILE_COMMANDS"] = "ON"
         tc.generate()
+
         deps = CMakeDeps(self)
         deps.generate()
+
+        venv = VirtualRunEnv(self)
+        venv.generate()
 
     def build(self):
         cmake = CMake(self)

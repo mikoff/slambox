@@ -62,13 +62,9 @@ class SymforceConan(ConanFile):
         else:
             assert False, "symengine python package not found"
 
-        env_file = os.path.join("/home/developer/", "symforce.env")
-        os.makedirs(os.path.dirname(env_file), exist_ok=True)
-        with open(env_file, "w") as f:
-            f.write(os.path.join(self.package_folder, "python"))
-
     def package_info(self):
         self.cpp_info.libs = ["symforce_cholesky", "symforce_gen", "symforce_opt", "symforce_slam"]
 
         python_folder = os.path.join(self.package_folder, "python")
-        self.env_info.PYTHONPATH.append(python_folder)
+        self.buildenv_info.prepend_path("PYTHONPATH", python_folder)
+        self.runenv_info.prepend_path("PYTHONPATH", python_folder)

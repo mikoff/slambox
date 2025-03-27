@@ -1,11 +1,11 @@
 # Repo for experiments on CV and SLAM
 
 ## Python
-Import all python modules:
+To activate conan-build packages, like `symforce`, call:
 ```bash
-source tools/activate-dev-env.sh
+source /workspace/build/generators/conanrun.sh
 ```
-then run ipython and experiment with `symforce` or other packages.
+If you want to use jupyter just open a notebook and pick Jupyter kernel, associated with `symforce`.
 
 
 ## C++ build

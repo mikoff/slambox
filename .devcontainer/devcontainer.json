@@ -1,7 +1,7 @@
 {
     "name": "development container",
     "dockerComposeFile": "../docker-compose.yml",
-    "postCreateCommand": "./.vscode/update-python-extra-paths.sh",
+    "postCreateCommand": "conan install . --build=missing && echo 'source /workspace/build/generators/conanrun.sh' >> /home/developer/venv/development/bin/activate && ./.vscode/update-python-extra-paths.py && bash -c 'source /home/developer/venv/development/bin/activate && python -m ipykernel install --user --name symforce-env --display-name \"Python (symforce-env)\"'  && python -m jupyter kernelspec list",
     "service": "development",
     "workspaceFolder": "/workspace",
     "remoteUser": "developer",
@@ -17,9 +17,8 @@
                 "ms-python.python",
                 "ms-python.vscode-pylance",
                 "ms-python.autopep8",
-                "ms-vscode.cpptools",
-                "xaver.clang-format",
-                "charliermarsh.ruff"
+                "charliermarsh.ruff",
+                "llvm-vs-code-extensions.vscode-clangd"
             ]
         }
     }

@@ -2,33 +2,37 @@
     "notebook.formatOnSave.enabled": true,
     "notebook.codeActionsOnSave": {
         "notebook.source.fixAll": "explicit",
-        "source.organizeImports": "explicit"
+        "source.organizeImports": "explicit",
     },
     "[python]": {
         "editor.formatOnType": true,
         "editor.wordBasedSuggestions": "off",
         "editor.codeActionsOnSave": {
             "source.fixAll": "explicit",
-            "source.organizeImports": "explicit"
+            "source.organizeImports": "explicit",
         },
-        "editor.defaultFormatter": "charliermarsh.ruff"
+        "editor.defaultFormatter": "charliermarsh.ruff",
     },
     "python.analysis.extraPaths": [
+        "/home/developer/.conan2/p/b/symfo4b58296ebd308/p/python",
     ],
     "ruff.lineLength": 88,
     "ruff.lint.select": [
         "C",
         "E",
         "F",
-        "W"
+        "W",
     ],
     "files.associations": {
-        "ostream": "cpp"
+        ostream: "cpp",
     },
-
+    "C_Cpp.default.compileCommands": [
+        "${workspaceFolder}/build/compile_commands.json",
+    ],
     "[cpp]": {
-        "editor.defaultFormatter": "ms-vscode.cpptools",
         "editor.formatOnType": false,
         "editor.formatOnSave": true,
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.inlayHints.enabled": "off",
     },
 }

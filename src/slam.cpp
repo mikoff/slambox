@@ -1,9 +1,9 @@
 #include "slam.h"
 
-#include <iostream>
+#include <sym/pose3.h>
 
 #include <Eigen/Core>
-#include <sym/pose3.h>
+#include <iostream>
 
 int slam() {
 #ifdef NDEBUG

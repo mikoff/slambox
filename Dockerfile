@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxdmcp-dev libxext-dev libxfixes-dev libxi-dev libxinerama-dev libxkbfile-dev \
     libxmu-dev libxmuu-dev libxpm-dev libxrandr-dev libxrender-dev libxres-dev libxss-dev \
     libxt-dev libxtst-dev libxv-dev libxxf86vm-dev uuid-dev xkb-data \
-    libgmp-dev \
+    libgmp-dev clangd \
     && rm -rf /var/lib/apt/lists/*
  
 # Stage 2: Builder (Build symforce via Conan)
@@ -37,8 +37,7 @@ RUN python3 -m venv $PYTHON_VENV && \
 COPY --chown=developer:developer requirements.txt .
 RUN . $PYTHON_VENV/bin/activate && pip install -r requirements.txt
 
-
-# Download & install symforce for c++ development
+# Download & install symforce for c++ & python development
 COPY --chown=developer:developer conan_recipes/symforce /home/developer/conan_recipes/symforce
 RUN . $PYTHON_VENV/bin/activate && \
     conan profile detect && \
@@ -54,7 +53,5 @@ WORKDIR /home/developer
 # Copy the virtual environment and the Conan cache from builder stage
 COPY --chown=developer:developer --from=builder /home/developer/venv/development /home/developer/venv/development
 COPY --chown=developer:developer --from=builder /home/developer/.conan2 /home/developer/.conan2
-COPY --chown=developer:developer --from=builder /home/developer/symforce.env /home/developer/symforce.env
 
-# Update PATH to use the virtualenv
 ENV PATH="/home/developer/venv/development/bin:$PATH"
